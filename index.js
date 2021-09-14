@@ -73,7 +73,7 @@ const Character = sequelize.define('Character', {
                 });
             };
 
-            return next ? getCharacters(next) : '';
+            return next ? getCharacters(next) : console.log('All done!');
         } else {
             return console.log('All done!');
         }
