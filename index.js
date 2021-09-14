@@ -46,7 +46,8 @@ const Character = sequelize.define('Character', {
         allowNull: false
     }
 }, {
-    tableName: 'isas2g'
+    tableName: 'isas2g',
+    timestamps: false
 });
 
 
@@ -58,23 +59,20 @@ const Character = sequelize.define('Character', {
     async function getCharacters(url) {
         const { data } = await axios(url);
 
-        const count = data.info.count;
         const next = data.info.next;
         const characters = data.results;
 
         if (next) {
             for (let character of characters) {
-                let id = character.id;
                 let name = character.name;
 
                 await Character.create({
-                    id,
                     name,
                     data: JSON.stringify(character)
                 });
             };
 
-            getCharacters(next);
+            return getCharacters(next);
         } else {
             return console.log('All done!');
         }
