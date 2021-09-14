@@ -60,9 +60,10 @@ const Character = sequelize.define('Character', {
         const { data } = await axios(url);
 
         const next = data.info.next;
+        const prev = data.info.prev;
         const characters = data.results;
 
-        if (next) {
+        if (next || (!next && prev)) {
             for (let character of characters) {
                 let name = character.name;
 
